@@ -7,7 +7,7 @@ Project ini menampilkan materi sejarah dalam bentuk **website interaktif berbasi
 
 ## Tampilan
 
-<video src="public/videos/tampilan.mp4" controls></video>
+[![Demo](public/videos/thumbnail.png)](public/videos/tampilan.mp4)
 
 ---
 
