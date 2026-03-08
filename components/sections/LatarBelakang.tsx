@@ -32,37 +32,42 @@ function HoverCard({ item }: { item: typeof items[0] }) {
       onMouseLeave={() => setHov(false)}
       style={{
         padding: "1.25rem",
-        border: `1px solid ${hov ? "#FDE68A" : "#F3F4F6"}`,
-        borderRadius: "12px",
-        background: hov ? "#FFFBEB" : "#FAFAFA",
-        transition: "all 0.2s ease",
+        border: `1px solid ${hov ? "rgba(180,83,9,0.6)" : "rgba(255,255,255,0.18)"}`,
+        borderRadius: "14px",
+        background: hov
+          ? "rgba(255,251,235,0.16)"
+          : "rgba(255,255,255,0.08)",
+        backdropFilter: "blur(22px)",
+        WebkitBackdropFilter: "blur(22px)",
+        boxShadow: hov
+          ? "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2)"
+          : "0 2px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.12)",
+        transition: "all 0.25s ease",
         cursor: "default",
-        transform: hov ? "translateY(-2px)" : "translateY(0)",
+        transform: hov ? "translateY(-3px)" : "translateY(0)",
       }}
     >
-      <div style={{
-        display: "flex", alignItems: "center", gap: "0.6rem",
-        marginBottom: "0.65rem",
-      }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.65rem" }}>
         <div style={{
           width: "32px", height: "32px", borderRadius: "8px",
-          background: hov ? "#B45309" : "#FEF3C7",
+          background: hov ? "#B45309" : "rgba(180,83,9,0.22)",
+          border: "1px solid rgba(180,83,9,0.4)",
           display: "flex", alignItems: "center", justifyContent: "center",
           color: hov ? "#fff" : "#B45309",
-          transition: "all 0.2s ease", flexShrink: 0,
+          transition: "all 0.25s ease", flexShrink: 0,
         }}>
           {item.icon}
         </div>
         <span style={{
           fontFamily: "var(--ff-body)", fontSize: "0.86rem",
-          fontWeight: 600, color: "#111111",
+          fontWeight: 600, color: "#F9FAFB",
         }}>
           {item.title}
         </span>
       </div>
       <p style={{
         fontFamily: "var(--ff-body)", fontSize: "0.82rem",
-        lineHeight: 1.65, color: "#6B7280",
+        lineHeight: 1.65, color: "#D1D5DB",
       }}>
         {item.desc}
       </p>
@@ -73,24 +78,71 @@ function HoverCard({ item }: { item: typeof items[0] }) {
 export default function LatarBelakang() {
   const ref = useRef<HTMLElement>(null);
   const [vis, setVis] = useState(false);
+
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.15 });
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVis(true); },
+      { threshold: 0.15 }
+    );
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
 
   return (
-    <section ref={ref} className="snap-section" style={{
-      background: "#FFFFFF",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      padding: "5rem 2rem",
-    }}>
-      <div style={{
-        maxWidth: "760px", width: "100%",
-        opacity: vis ? 1 : 0,
-        transform: vis ? "translateY(0)" : "translateY(24px)",
-        transition: "opacity 0.7s ease, transform 0.7s ease",
-      }}>
+    <section
+      ref={ref}
+      className="snap-section"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "5rem 2rem",
+        minHeight: "100vh",
+      }}
+    >
+      {/* ── Background image — full cover ── */}
+      <img
+        aria-hidden="true"
+        src="/photos/konstituante.jpeg"
+        alt="konstituante.jpeg"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
+          filter: "brightness(0.35) saturate(1.1)",
+          zIndex: 0,
+        }}
+      />
+
+      {/* ── Subtle vignette for readability ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          background:
+            "radial-gradient(ellipse at center, transparent 25%, rgba(0,0,0,0.4) 100%)",
+        }}
+      />
+
+      {/* ── Content ── */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: "760px",
+          width: "100%",
+          opacity: vis ? 1 : 0,
+          transform: vis ? "translateY(0)" : "translateY(24px)",
+          transition: "opacity 0.7s ease, transform 0.7s ease",
+        }}
+      >
         <p style={{
           fontFamily: "var(--ff-body)", fontSize: "0.7rem", fontWeight: 600,
           letterSpacing: "0.18em", color: "#B45309",
@@ -98,26 +150,27 @@ export default function LatarBelakang() {
         }}>
           02 — Latar Belakang
         </p>
+
         <h2 style={{
           fontFamily: "var(--ff-display)",
           fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
           fontWeight: 700, letterSpacing: "-0.02em",
-          color: "#111111", marginBottom: "1.75rem", lineHeight: 1.15,
+          color: "#FFFFFF", marginBottom: "1.75rem", lineHeight: 1.15,
         }}>
           Mengapa Dekrit Diperlukan?
         </h2>
 
+        {/* Blockquote — plain, no glass */}
         <blockquote style={{
           borderLeft: "3px solid #B45309",
-          paddingLeft: "1.25rem",
-          marginBottom: "2.5rem",
-          background: "#FAFAFA",
-          padding: "1.25rem 1.5rem",
-          borderRadius: "0 10px 10px 0",
+          borderRadius: "0 8px 8px 0",
+          marginBottom: "2rem",
+          padding: "1.1rem 1.5rem",
+          background: "transparent",
         }}>
           <p style={{
             fontFamily: "var(--ff-display)", fontSize: "0.95rem",
-            fontStyle: "italic", lineHeight: 1.7, color: "#4B5563",
+            fontStyle: "italic", lineHeight: 1.7, color: "#E5E7EB",
           }}>
             "Dekrit Presiden dilatarbelakangi oleh kegagalan Konstituante dalam menetapkan UUD baru pengganti UUDS 1950 serta situasi politik yang tidak stabil sehingga mengancam persatuan negara."
           </p>
@@ -130,7 +183,9 @@ export default function LatarBelakang() {
         </blockquote>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.9rem" }}>
-          {items.map((item, i) => <HoverCard key={i} item={item} />)}
+          {items.map((item, i) => (
+            <HoverCard key={i} item={item} />
+          ))}
         </div>
       </div>
     </section>

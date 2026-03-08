@@ -60,56 +60,115 @@ export default function Tujuan() {
   const ref = useRef<HTMLElement>(null);
   const [vis, setVis] = useState(false);
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.15 });
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVis(true); },
+      { threshold: 0.15 }
+    );
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
 
   return (
-    <section ref={ref} className="snap-section" style={{
-      background: "#FAFAFA",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      padding: "5rem 2rem",
-    }}>
+    <section
+      ref={ref}
+      className="snap-section"
+      style={{
+        position: "relative",
+        display: "flex",
+        alignItems: "stretch",
+        height: "100vh",
+        overflow: "hidden",
+        background: "#FAFAFA",
+      }}
+    >
+      {/* ── LEFT: image panel, fixed ~35% width, full 100vh ── */}
       <div style={{
-        maxWidth: "760px", width: "100%",
-        opacity: vis ? 1 : 0,
-        transform: vis ? "translateY(0)" : "translateY(24px)",
-        transition: "opacity 0.7s ease, transform 0.7s ease",
+        position: "relative",
+        width: "35%",
+        flexShrink: 0,
+        height: "100%",
       }}>
-        <p style={{
-          fontFamily: "var(--ff-body)", fontSize: "0.7rem", fontWeight: 600,
-          letterSpacing: "0.18em", color: "#B45309",
-          textTransform: "uppercase", marginBottom: "1.25rem",
-        }}>
-          04 — Tujuan
-        </p>
-        <h2 style={{
-          fontFamily: "var(--ff-display)",
-          fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-          fontWeight: 700, letterSpacing: "-0.02em",
-          color: "#111111", marginBottom: "0.75rem", lineHeight: 1.15,
-        }}>
-          Tujuan Dikeluarkannya Dekrit
-        </h2>
-        <p style={{
-          fontFamily: "var(--ff-display)", fontSize: "0.98rem",
-          fontStyle: "italic", color: "#6B7280",
-          marginBottom: "2.5rem", lineHeight: 1.6,
-        }}>
-          "Dekrit bertujuan memulihkan keadaan negara agar pemerintahan kembali berjalan efektif."
-        </p>
+        <img
+          src="photos/read.jpeg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            filter: "brightness(0.72) saturate(0.9) grayscale(0.2)",
+          }}
+        />
+        {/* right-edge fade into white */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(to right, transparent 50%, rgba(250,250,250,0.6) 75%, #FAFAFA 100%)",
+          }}
+        />
+      </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem", marginBottom: "1.75rem" }}>
-          {items.map((item, i) => <HoverItem key={i} item={item} index={i} />)}
+      {/* ── RIGHT: content, takes remaining ~65% ── */}
+      <div style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        padding: "4rem 4rem 4rem 2.5rem",
+        overflow: "auto",
+      }}>
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "680px",
+            opacity: vis ? 1 : 0,
+            transform: vis ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity 0.7s ease, transform 0.7s ease",
+          }}
+        >
+          <p style={{
+            fontFamily: "var(--ff-body)", fontSize: "0.7rem", fontWeight: 600,
+            letterSpacing: "0.18em", color: "#B45309",
+            textTransform: "uppercase", marginBottom: "1.25rem",
+          }}>
+            04 — Tujuan
+          </p>
+
+          <h2 style={{
+            fontFamily: "var(--ff-display)",
+            fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+            fontWeight: 700, letterSpacing: "-0.02em",
+            color: "#111111", marginBottom: "0.75rem", lineHeight: 1.15,
+          }}>
+            Tujuan Dikeluarkannya Dekrit
+          </h2>
+
+          <p style={{
+            fontFamily: "var(--ff-display)", fontSize: "0.98rem",
+            fontStyle: "italic", color: "#6B7280",
+            marginBottom: "2.5rem", lineHeight: 1.6,
+          }}>
+            "Dekrit bertujuan memulihkan keadaan negara agar pemerintahan kembali berjalan efektif."
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem", marginBottom: "1.75rem" }}>
+            {items.map((item, i) => (
+              <HoverItem key={i} item={item} index={i} />
+            ))}
+          </div>
+
+          <p style={{
+            fontFamily: "var(--ff-body)", fontSize: "0.72rem",
+            color: "#9CA3AF", fontStyle: "italic",
+          }}>
+            Sumber: Asshiddiqie
+          </p>
         </div>
-
-        <p style={{
-          fontFamily: "var(--ff-body)", fontSize: "0.72rem",
-          color: "#9CA3AF", fontStyle: "italic",
-        }}>
-          Sumber: Asshiddiqie
-        </p>
       </div>
     </section>
   );
