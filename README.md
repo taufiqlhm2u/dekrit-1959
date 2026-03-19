@@ -3,11 +3,7 @@
 Presentasi sejarah **Dekrit Presiden 5 Juli 1959** yang dibuat menggunakan **Next.js** dan **shadcn/ui**.  
 Project ini menampilkan materi sejarah dalam bentuk **website interaktif berbasis scroll** dengan animasi, video hero, dan elemen kartu interaktif.
 
----
-
-## Link
-
-<a href="https://taufiqlhm-dekrit.netlify.app" target="_blank">https://taufiqlhm-dekrit.netlify.app</a>
+Link akses: <a href="https://taufiqlhm-dekrit.netlify.app" target="_blank">https://taufiqlhm-dekrit.netlify.app</a>
 ---
 
 ## Struktur File
