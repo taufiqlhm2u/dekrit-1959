@@ -5,7 +5,9 @@ Project ini menampilkan materi sejarah dalam bentuk **website interaktif berbasi
 
 ---
 
-Link: <a href="https://taufiqlhm-dekrit.netlify.app" target="_blank">https://taufiqlhm-dekrit.netlify.app</a>
+## Link
+
+<a href="https://taufiqlhm-dekrit.netlify.app" target="_blank">https://taufiqlhm-dekrit.netlify.app</a>
 ---
 
 ## Struktur File
