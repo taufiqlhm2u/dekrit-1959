@@ -43,7 +43,7 @@ export default function DaftarPustaka() {
           fontWeight: 600, letterSpacing: "0.18em",
           color: "#B45309", textTransform: "uppercase", marginBottom: "1.25rem",
         }}>
-          08 — Daftar Pustaka
+          07 — Daftar Pustaka
         </p>
         <h2 style={{
           fontFamily: "var(--ff-display)",

@@ -35,7 +35,7 @@ export default function TerimaKasih() {
           fontWeight: 600, letterSpacing: "0.18em",
           color: "#B45309", textTransform: "uppercase", marginBottom: "2rem",
         }}>
-          07 — Penutup
+          08 — Penutup
         </p>
 
         <h2 style={{

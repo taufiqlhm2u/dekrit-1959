@@ -34,8 +34,8 @@ export default function DemoOne() {
         <Tujuan />
         <Dampak />
         <Kesimpulan />
-        <TerimaKasih />
         <DaftarPustaka />
+        <TerimaKasih />
       </div>
     </main>
   );
