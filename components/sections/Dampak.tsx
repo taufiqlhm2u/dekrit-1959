@@ -56,7 +56,7 @@ export default function Dampak() {
   const [vis, setVis] = useState(false);
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVis(true); },
+      ([e]) => setVis(e.isIntersecting),
       { threshold: 0.15 }
     );
     if (ref.current) obs.observe(ref.current);

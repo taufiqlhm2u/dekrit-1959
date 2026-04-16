@@ -11,7 +11,7 @@ function ContentLayer({ dark }: { dark: boolean }) {
       <p style={{
         fontFamily: "var(--ff-body)", fontSize: "0.7rem",
         fontWeight: 600, letterSpacing: "0.18em",
-        color: dark ? "#FCD34D" : "#B45309",
+        color:"#B45309",
         textTransform: "uppercase", marginBottom: "1.25rem",
       }}>
         06 — Kesimpulan
@@ -29,7 +29,7 @@ function ContentLayer({ dark }: { dark: boolean }) {
 
       <div style={{
         width: "32px", height: "2px",
-        background: dark ? "#FCD34D" : "#B45309",
+        background: "#B45309",
         margin: "0 auto 2rem",
       }} />
 
@@ -63,10 +63,10 @@ function ContentLayer({ dark }: { dark: boolean }) {
             fontFamily: "var(--ff-body)", fontSize: "0.75rem",
             fontWeight: 500,
             color: dark ? "#FFFFFF" : "#B45309",
-            background: dark ? "rgba(180,83,9,0.55)" : "#FEF3C7",
+            background: dark ? "#B45309" : "#FFFFFF",
             padding: "0.35rem 0.85rem",
             borderRadius: "999px",
-            border: `1px solid ${dark ? "rgba(253,230,138,0.5)" : "#FDE68A"}`,
+            border: `1px solid ${dark ? "rgba(253,230,138,0.5)" : "#B45309"}`,
           }}>
             {tag}
           </span>
@@ -83,7 +83,7 @@ export default function Kesimpulan() {
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVis(true); },
+      ([e]) => setVis(e.isIntersecting),
       { threshold: 0.2 }
     );
     if (sectionRef.current) obs.observe(sectionRef.current);
@@ -115,7 +115,6 @@ export default function Kesimpulan() {
         padding: "6rem 2rem",
         minHeight: "100vh",
         background: "#FAFAFA",
-        cursor: "none",
       }}
     >
       {/* ── Base: background image revealed only near cursor ── */}
@@ -179,26 +178,6 @@ export default function Kesimpulan() {
       >
         <ContentLayer dark={true} />
       </div>
-
-      {/* ── Custom cursor dot ── */}
-      {mouse && (
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            left: mouse.x,
-            top: mouse.y,
-            width: "8px",
-            height: "8px",
-            borderRadius: "50%",
-            background: "#B45309",
-            transform: "translate(-50%, -50%)",
-            zIndex: 10,
-            pointerEvents: "none",
-            boxShadow: "0 0 0 3px rgba(180,83,9,0.25)",
-          }}
-        />
-      )}
     </section>
   );
 }

@@ -16,7 +16,7 @@
   --ff-body:      "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
 html { scroll-behavior: smooth; }
 
 body {
@@ -25,6 +25,35 @@ body {
   font-family: var(--ff-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  cursor: none;
+}
+
+/* Presentation laser-pointer cursor */
+#laser-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #B45309 0%, rgba(180,83,9,0.6) 50%, transparent 100%);
+  box-shadow: 0 0 8px 2px rgba(180,83,9,0.35), 0 0 20px 4px rgba(180,83,9,0.12);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.15s ease;
+  mix-blend-mode: normal;
+}
+#laser-cursor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FCD34D;
 }
 
 ::-webkit-scrollbar { width: 3px; }

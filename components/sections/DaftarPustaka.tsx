@@ -21,7 +21,7 @@ export default function DaftarPustaka() {
   const ref = useRef<HTMLElement>(null);
   const [vis, setVis] = useState(false);
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.15 });
+    const obs = new IntersectionObserver(([e]) => setVis(e.isIntersecting), { threshold: 0.15 });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
@@ -43,7 +43,7 @@ export default function DaftarPustaka() {
           fontWeight: 600, letterSpacing: "0.18em",
           color: "#B45309", textTransform: "uppercase", marginBottom: "1.25rem",
         }}>
-          07 — Daftar Pustaka
+          08 — Daftar Pustaka
         </p>
         <h2 style={{
           fontFamily: "var(--ff-display)",

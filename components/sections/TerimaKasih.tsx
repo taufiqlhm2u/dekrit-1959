@@ -5,7 +5,7 @@ export default function TerimaKasih() {
   const ref = useRef<HTMLElement>(null);
   const [vis, setVis] = useState(false);
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.3 });
+    const obs = new IntersectionObserver(([e]) => setVis(e.isIntersecting), { threshold: 0.3 });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
@@ -35,7 +35,7 @@ export default function TerimaKasih() {
           fontWeight: 600, letterSpacing: "0.18em",
           color: "#B45309", textTransform: "uppercase", marginBottom: "2rem",
         }}>
-          08 — Penutup
+          09 — Penutup
         </p>
 
         <h2 style={{

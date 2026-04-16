@@ -1,20 +1,28 @@
 "use client";
-import React, { useEffect } from "react";
-import "aos/dist/aos.css";
-import AOS from "aos";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function Pengertian() {
+  const ref = useRef<HTMLElement>(null);
+  const [vis, setVis] = useState(false);
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,    
-      easing: "ease-out-cubic"
-    });
+    const obs = new IntersectionObserver(
+      ([e]) => setVis(e.isIntersecting),
+      { threshold: 0.15 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
+
+  const fadeUp = (delay = 0): React.CSSProperties => ({
+    opacity: vis ? 1 : 0,
+    transform: vis ? "translateY(0)" : "translateY(28px)",
+    transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
+  });
 
   return (
     <section
+      ref={ref}
       style={{
         position: "relative",
         zIndex: 2,
@@ -28,11 +36,10 @@ export default function Pengertian() {
       }}
     >
       <div
-        data-aos="fade-up"
-        data-aos-duration="1000"
         style={{
           maxWidth: "680px",
           width: "100%",
+          ...fadeUp(0),
         }}
       >
         <p
@@ -89,14 +96,13 @@ export default function Pengertian() {
         </p>
 
         <div
-          data-aos="fade-up"
-          data-aos-delay="300"
           style={{
             padding: "1.5rem 2rem",
             background: "#FFFBEB",
             border: "1px solid #FDE68A",
             borderLeft: "4px solid #B45309",
             borderRadius: "0 12px 12px 0",
+            ...fadeUp(0.3),
           }}
         >
           <p

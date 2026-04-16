@@ -143,9 +143,7 @@ export default function IsiDekrit() {
   // Intersection Observer untuk animasi scroll
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setVis(true);
-      },
+      ([e]) => setVis(e.isIntersecting),
       { threshold: 0.15 }
     );
     if (sectionRef.current) obs.observe(sectionRef.current);

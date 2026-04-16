@@ -37,8 +37,8 @@ function HoverCard({ item }: { item: typeof items[0] }) {
         background: hov
           ? "rgba(255,251,235,0.16)"
           : "rgba(255,255,255,0.08)",
-        backdropFilter: "blur(22px)",
-        WebkitBackdropFilter: "blur(22px)",
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
         boxShadow: hov
           ? "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2)"
           : "0 2px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.12)",
@@ -81,7 +81,7 @@ export default function LatarBelakang() {
 
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVis(true); },
+      ([e]) => setVis(e.isIntersecting),
       { threshold: 0.15 }
     );
     if (ref.current) obs.observe(ref.current);

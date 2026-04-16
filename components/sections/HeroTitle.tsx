@@ -1,20 +1,33 @@
 "use client";
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function HeroTitle() {
+  const ref = useRef<HTMLElement>(null);
+  const [vis, setVis] = useState(false);
 
   useEffect(() => {
-    AOS.init({
-      duration: 2000,
-      once: true,
-      easing: "ease-out-cubic"
-    });
+    const obs = new IntersectionObserver(
+      ([e]) => setVis(e.isIntersecting),
+      { threshold: 0.2 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
 
+  const fadeUp = (delay = 0): React.CSSProperties => ({
+    opacity: vis ? 1 : 0,
+    transform: vis ? "translateY(0)" : "translateY(28px)",
+    transition: `opacity 0.8s ease ${delay}s, transform 0.8s ease ${delay}s`,
+  });
+
+  const zoomIn = (delay = 0): React.CSSProperties => ({
+    opacity: vis ? 1 : 0,
+    transform: vis ? "scale(1)" : "scale(0.85)",
+    transition: `opacity 0.8s ease ${delay}s, transform 0.8s ease ${delay}s`,
+  });
+
   return (
-    <section style={{
+    <section ref={ref} style={{
       minHeight: "100vh",
       background: "#111111",
       display: "flex",
@@ -39,19 +52,15 @@ export default function HeroTitle() {
         pointerEvents: "none",
       }} />
 
-      <div
-        data-aos="fade-up"
-        style={{
-          position: "relative",
-          zIndex: 1,
-          textAlign: "center",
-        }}
-      >
+      <div style={{
+        position: "relative",
+        zIndex: 1,
+        textAlign: "center",
+        ...fadeUp(0),
+      }}>
         
         {/* Eyebrow */}
         <p
-          data-aos="fade-up"
-          data-aos-delay="100"
           style={{
             fontFamily: "var(--ff-body)",
             fontSize: "0.7rem",
@@ -60,6 +69,7 @@ export default function HeroTitle() {
             color: "#B45309",
             textTransform: "uppercase",
             marginBottom: "2rem",
+            ...fadeUp(0.1),
           }}
         >
           Presentasi Sejarah
@@ -67,8 +77,6 @@ export default function HeroTitle() {
 
         {/* Main heading */}
         <h1
-          data-aos="zoom-in"
-          data-aos-delay="200"
           style={{
             fontFamily: "var(--ff-display)",
             fontSize: "clamp(3.5rem, 10vw, 8rem)",
@@ -77,14 +85,13 @@ export default function HeroTitle() {
             letterSpacing: "-0.03em",
             color: "#FFFFFF",
             marginBottom: "0.3rem",
+            ...zoomIn(0.2),
           }}
         >
           Dekrit Presiden
         </h1>
 
         <h2
-          data-aos="fade-up"
-          data-aos-delay="400"
           style={{
             fontFamily: "var(--ff-display)",
             fontSize: "clamp(2.5rem, 7vw, 5.5rem)",
@@ -94,6 +101,7 @@ export default function HeroTitle() {
             letterSpacing: "-0.02em",
             color: "#B45309",
             marginBottom: "3rem",
+            ...fadeUp(0.4),
           }}
         >
           5 Juli 1959
@@ -101,26 +109,24 @@ export default function HeroTitle() {
 
         {/* Divider */}
         <div
-          data-aos="fade-up"
-          data-aos-delay="500"
           style={{
             width: "40px",
             height: "1px",
             background: "rgba(255,255,255,0.15)",
             margin: "0 auto 2rem",
+            ...fadeUp(0.5),
           }}
         />
 
         {/* Author */}
         <p
-          data-aos="fade-up"
-          data-aos-delay="600"
           style={{
             fontFamily: "var(--ff-body)",
             fontSize: "0.85rem",
             fontWeight: 400,
             color: "rgba(255,255,255,0.4)",
             letterSpacing: "0.05em",
+            ...fadeUp(0.6),
           }}
         >
           Disusun oleh{" "}
@@ -132,8 +138,6 @@ export default function HeroTitle() {
 
       {/* Scroll cue */}
       <div
-        data-aos="fade-up"
-        data-aos-delay="900"
         style={{
           position: "absolute",
           bottom: "2.5rem",
@@ -143,6 +147,7 @@ export default function HeroTitle() {
           flexDirection: "column",
           alignItems: "center",
           gap: "6px",
+          ...fadeUp(0.9),
         }}
       >
         <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
