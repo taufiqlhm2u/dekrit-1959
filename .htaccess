@@ -1,0 +1,35 @@
+Options -MultiViews
+RewriteEngine On
+
+# If the request is for a real file or directory, serve it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Proxy everything else to the Node.js app running on Passenger/port
+# cPanel Passenger manages the port automatically via the socket.
+# If using a manual port (e.g. 3000), uncomment the lines below instead.
+
+# --- Option A: Passenger (recommended for cPanel Node.js App) ---
+# Passenger handles the proxy automatically; no RewriteRule needed.
+# Just ensure the startup file is set to server.js in cPanel.
+
+# --- Option B: Manual ProxyPass (if Passenger is NOT used) ---
+# Uncomment these and replace 3000 with your actual port:
+#
+# RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
+# ProxyPassReverse / http://127.0.0.1:3000/
+
+# Security headers
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-XSS-Protection "1; mode=block"
+
+# Cache static Next.js assets aggressively
+<FilesMatch "\.(js|css|woff2?|png|jpg|jpeg|gif|ico|svg|webp|mp4|webm)$">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+
+# Gzip compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json
+</IfModule>
