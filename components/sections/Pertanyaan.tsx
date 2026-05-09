@@ -196,7 +196,7 @@ export default function Pertanyaan() {
               margin: 0,
             }}
           >
-            Kalo mau bertanya gapapa, gue jawab sebisanya saja🙏🏽
+           Gak usah banyak nanya, biar cepet kelar ini
           </p>
         </div>
       </div>

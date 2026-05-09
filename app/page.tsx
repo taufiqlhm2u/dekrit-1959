@@ -11,11 +11,17 @@ import Kesimpulan from "@/components/sections/Kesimpulan";
 import Pertanyaan from "@/components/sections/Pertanyaan";
 import TerimaKasih from "@/components/sections/TerimaKasih";
 import DaftarPustaka from "@/components/sections/DaftarPustaka";
+import SplashScreen from "@/components/ui/splash-screen";
+import { AnimatePresence } from "framer-motion";
+
 
 export default function DemoOne() {
   const snapRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [showSplash, setShowSplash] = useState(true);
+
 
   // ── Laser pointer cursor ──
   useEffect(() => {
@@ -44,7 +50,6 @@ export default function DemoOne() {
     };
 
     const tick = () => {
-      // Smooth lerp for a polished feel
       curX += (mouseX - curX) * 0.25;
       curY += (mouseY - curY) * 0.25;
       cursor.style.left = `${curX}px`;
@@ -63,6 +68,7 @@ export default function DemoOne() {
       cancelAnimationFrame(raf);
     };
   }, []);
+
 
   // ── Track current section via IntersectionObserver ──
   useEffect(() => {
@@ -131,21 +137,24 @@ export default function DemoOne() {
 
   return (
     <main>
+      <AnimatePresence mode="wait">
+        {showSplash && (
+          <SplashScreen key="splash" onComplete={() => setShowSplash(false)} />
+        )}
+      </AnimatePresence>
+
       {/* Laser pointer cursor */}
       <div id="laser-cursor" ref={cursorRef} />
 
+
+      {/* Main Content - Only show or handle as needed. 
+          Actually, since SplashScreen is fixed and high z-index, 
+          we can keep the content behind it for smoother reveal. */}
       {/* 1. Landing Judul */}
       <HeroTitle />
 
       {/* 2. Video — scroll makes it grow from small to full width */}
       <HeroScrollVideo media="/videos/hero.mp4" />
-
-      {/*
-        3. Pengertian — white background, z-index higher than video section
-           so it naturally scrolls on top and "covers" the dark video area
-      */}
-      {/* <div style={{ position: "relative", zIndex: 10, background: "#fff" }}>
-      </div> */}
 
       {/* 4–10. Snap scroll sections */}
       <div className="snap-wrap" ref={snapRef}>
@@ -161,5 +170,6 @@ export default function DemoOne() {
       </div>
     </main>
   );
+
 }
 
